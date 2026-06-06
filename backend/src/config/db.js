@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const MONGO_URI = "mongodb+srv://Pitamber:pitamber@cluster0.lotqq4g.mongodb.net/todo-app?appName=Cluster0"
+const MONGO_URI = process.env.MONGO_URI;
 
 const connectDB= async ()=>{
     try{
@@ -12,4 +12,4 @@ const connectDB= async ()=>{
     }
 }
 
-module.exports = connectDB;
+export default connectDB;

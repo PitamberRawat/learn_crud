@@ -1,14 +1,17 @@
 
 import React, { useState } from 'react'
+import axios from 'axios';
 
 const AuthPage = ({ setUser }) => {
 
+    const API_URL = "http://localhost:3100/api"
     const [isLoginClicked, setIsLoginClicked] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
 
     const checkAuth = async () => {
+        console.log("executing");
         if (isLoginClicked) {
             try{
                 const res = await axios.post(`${API_URL}/login`, { email, password });
@@ -20,7 +23,7 @@ const AuthPage = ({ setUser }) => {
             }
          }else{
             try{
-                const res = await axios.post(`${API_URL}/register`, { name, email, password });
+                const res = await axios.post(`${API_URL}/auth/register`, { name, email, password });
                 setUser(true);
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 localStorage.setItem('token', res.data.token);

@@ -1,11 +1,16 @@
-const express = require('express')
-const cors = require('cors')
-const Todo = require('./models/todo')
+import express from 'express'
+import cors from 'cors'
+import Todo from './models/todo.js'
+import authRoutes from './routes/authRoute.js'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors())
 
+app.use('/api/auth', authRoutes);
 //  FETCHING TODOS LIST 
 app.get('/api/fetch-todos', async (req, res) => {
     try {
@@ -75,8 +80,5 @@ app.patch('/api/toogle-complete/:id', async(req,res)=>{
     }
 })
 
-// app.use("/api/auth", authRoutes)
 
-
-
-module.exports = app;
+export default app;
