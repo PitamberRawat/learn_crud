@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Todo = () => {
-    const API_URL = "http://localhost:3100/api"
+    const API_URL = "http://localhost:3100/api/todos"
 
     const [todoList, setTodoList] = useState([]);
     const [title, setTitle] = useState('');

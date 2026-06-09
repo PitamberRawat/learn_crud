@@ -9,24 +9,20 @@ const AuthPage = ({ setUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const [role, setRole] = useState('user');
 
     const checkAuth = async () => {
-        console.log("executing");
         if (isLoginClicked) {
             try{
-                const res = await axios.post(`${API_URL}/login`, { email, password });
+                const res = await axios.post(`${API_URL}/auth/login`, { email, password });
                 setUser(true);
-                localStorage.setItem('user', JSON.stringify(res.data.user));
-                localStorage.setItem('token', res.data.token);
             }catch(err){
                 console.log(err);
             }
          }else{
             try{
-                const res = await axios.post(`${API_URL}/auth/register`, { name, email, password });
+                const res = await axios.post(`${API_URL}/auth/register`, { name, email, password, role });
                 setUser(true);
-                localStorage.setItem('user', JSON.stringify(res.data.user));
-                localStorage.setItem('token', res.data.token);
             }catch(err){
                 console.log(err);
             }
@@ -68,6 +64,10 @@ const AuthPage = ({ setUser }) => {
                 <input type="text" placeholder="Enter name" className='input-field' value={name} onChange={(e) => setName(e.target.value)} />
                 <input type="email" placeholder="Enter email" className='input-field' value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" placeholder="Enter password" className='input-field' value={password} onChange={(e) => setPassword(e.target.value)} />
+                <select name="role" id="role" className='input-field' value={role} onChange={(e) => setRole(e.target.value)}>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
                 <button className='button register-button' onClick={() => checkAuth()}>Register</button>
                 <p>Already have an account? <span className='login-link' onClick={switchToLogin}>Login</span></p>
             </div>}

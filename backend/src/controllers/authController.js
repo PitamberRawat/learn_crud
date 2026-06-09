@@ -16,13 +16,13 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({ name, email, password: hashedPassword ,role:role});
-        user.toObject();
-        delete user.password;
+        const userData = user.toObject();
+        delete userData.password;
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+        const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET)
         res.cookie("token",token);
 
-        return res.status(201).json({ message: "user created successfully", user });
+        return res.status(201).json({ message: "user created successfully", userData });
 
     } catch (error) {
         return res.status(500).json({ message: "Internal server error", error: error.message });
@@ -45,13 +45,13 @@ const loginUser = async (req, res) => {
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
-        user.toObject();
-        delete user.password;
+        const userData = user.toObject();
+        delete userData.password;
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET);
         res.cookie("token",token);
 
-        return res.status(200).json({ message: "Login successful", user });
+        return res.status(200).json({ message: "Login successful", userData });
 
     } catch (error) {
         return res.status(500).json({ message: "Internal server error", error: error.message });

@@ -4,6 +4,8 @@ import "./App.css"
 import Todo from './Todo';
 import AuthPage from './AuthPage';
 
+axios.defaults.withCredentials = true;
+
 const App = () => {
   const [User, setUser] = useState(false);
   return (
